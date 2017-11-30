@@ -93,6 +93,7 @@ exports.initialize = function () {
             } else {
                 // Some users were not invited.
                 var invitee_emails_errored = [];
+
                 var error_list = $('<ul>');
                 _.each(arr.errors, function (value) {
                     error_list.append($('<li>').text(value.join(': ')));
@@ -109,7 +110,9 @@ exports.initialize = function () {
                 if (arr.sent_invitations) {
                     invitee_emails.val(invitee_emails_errored.join('\n'));
                 } else { // Invitations not sent -- keep all emails in the list
-                    var current_emails = invitee_emails.val().split(/\n|,/);
+
+                    var current_emails = invitee_emails.val().replace(/ /g,'').split(/\n|,/);
+
                     invitee_emails.val(util.move_array_elements_to_front(current_emails, invitee_emails_errored).join('\n'));
                 }
 
